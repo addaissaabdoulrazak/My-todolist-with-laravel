@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\View as ViewView;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TodoController extends Controller
 {
@@ -50,6 +51,7 @@ class TodoController extends Controller
         $datas = DB::table('todolist')->where('affectedTo_id', $userID)
             ->orderBy('id', 'desc')
             ->paginate(5);
+
         /* la method compact qui a pour specifité de prendre  le nom de la variable entre côte et  sans compact('datas')*/
         $users = $this->users;
         return view('todos.index', compact('datas', 'users'));
@@ -79,8 +81,8 @@ class TodoController extends Controller
         $formularData->affectedBy_id = 0;
         $formularData->name = $request->titre;
         $formularData->description = $request->description;
-        // dd($formularData);
         $formularData->save();
+        Alert::success('Success Title', 'Success Message');
         return Redirect()->route('todos.index');
     }
 
@@ -131,10 +133,10 @@ class TodoController extends Controller
         $todo->description = $request->description;
         $todo->done = $request->done;
         $todo->save();
-
+        //alert()->success('SuccessAlert', 'Lorem ipsum dolor sit amet.');
         ## i don't use the save() method
 
-        return redirect()->route("todos.index");
+        return redirect()->route("todos.index")->with('success', 'succeffuly update');
     }
 
     /**
@@ -147,6 +149,7 @@ class TodoController extends Controller
     public function destroy($id)
     {
         DB::table('todolist')->where('id', $id)->delete();
+        toast('Success Toast', 'success');
         return back();
     }
 
