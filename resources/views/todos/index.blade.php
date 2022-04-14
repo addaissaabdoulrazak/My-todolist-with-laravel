@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-center">
@@ -40,6 +39,7 @@
 <!-- recuperation du modèle ayant été transmis par le controller puis parcour de ce model -->
 @foreach($datas as $value)
 <h4>
+    <!-- si/sion => ?/: au niveau des attribut CSS très pratique -->
     <div class="alert alert-{{$value->done==1 ? 'success' : 'warning'}}" role="alert">
         <!-- deux col-sm => obtenir deux colone sur la même ligne -->
         {{--Bouton Done/Undone (ceci est une autre façon de faire un commentaire)--}}
@@ -51,7 +51,9 @@
                     </strong>
                 </p>
                 <small>
-
+                    crée {{$value->created_at}} par
+                    {{Auth::user()->name
+                    }}
                 </small>
                 <!--  -->
                 <small>
@@ -79,7 +81,7 @@
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-
+                        <!-- au lieu de faire +sieur balise <li> vaut mieux faire une boucle forEach -->
                         @foreach($users as $user)
                         <li><a class="dropdown-item" href="/todos/{{$value->id}}/affectTo/{{$user->id}}">{{$user->name}}</a></li>
                         @endforeach
@@ -87,7 +89,7 @@
                 </div>
                 <!-- FIN -->
 
-                <!-- Bouton Done / Undone -->
+                <!-- Bouton Done / Undone => Makedone action Controller -->
                 @if($value->done)
                 <form action=" {{route('todos.makedone',$value->id)}}" method="post">
                     @csrf

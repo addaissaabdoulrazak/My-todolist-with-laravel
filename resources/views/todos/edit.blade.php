@@ -17,6 +17,7 @@
         <textarea name="description" type="text" class="form-control" id="exampleFormControlInput2" placeholder="description">{{old('description',$todo->description)}}</textarea>
       </div>
       <div class="form-check m-2">
+        <!-- si/sion ?/: au niveau des proriété html(check) très pratique -->
         <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="done" {{$todo->done==1 ? 'checked' : ''}} value=1>
         <label class="form-check-label" for="flexCheckDefault">
           Done ?

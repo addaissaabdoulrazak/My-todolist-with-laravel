@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Todolist::factory(10)->create();
+        \App\Models\Todolist::factory(10)
+        ->create();
     }
 }

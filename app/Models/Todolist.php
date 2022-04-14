@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Todolist extends Model
 {
@@ -17,4 +18,34 @@ class Todolist extends Model
         'done'
     ];
     protected $table = "todolist";
+
+
+    /**
+     **get user create to this todo
+     *
+     * TODO: rappel:the particularity of the model is to containt method.
+     * 
+     * ? BelongsTo = appartient à
+     * 
+     * ! relation one to many, in this class we have a belongsTo relation 
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    /**
+     * get user affected to this todo 
+     */
+    public function TodAffectedTo()
+    {
+        return $this->belongsTo(User::class, 'affectedTo_id');
+    }
+
+    /**
+     * get user who has affected to this todo
+     */
+    public function TodoAffectedBy()
+    {
+        return $this->belongsTo(User::class, 'affectedBy_id');
+    }
 }

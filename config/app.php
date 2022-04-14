@@ -164,6 +164,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         //RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class, // 'providers'
 
         /*
          * Package Service Providers...
@@ -180,6 +182,7 @@ return [
 
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
@@ -194,6 +197,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // ...
         //'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ])->toArray(),
 
 ];

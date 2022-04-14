@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Todolist;
+
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Todolist;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\View;
-use Illuminate\View\View as ViewView;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request; 
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TodoController extends Controller
@@ -46,14 +44,19 @@ class TodoController extends Controller
     {
         //Query buider
         // $datas = DB::table('Todolist')->paginate(5);
-        $userID = Auth::user()->id;
+
         // afficher uniquement les Todo qui sont affecter a l'utilisateur courant(celui  qui est actuelement connecter)
-        $datas = DB::table('todolist')->where('affectedTo_id', $userID)
+        $userID = Auth::user();
+        // $datas = DB::table('todolist')->where('affectedTo_id', $userID)
+        //     ->orderBy('id', 'desc')
+        //     ->paginate(5);
+        $datas=Todolist::where('affectedTo_id', $userID)
             ->orderBy('id', 'desc')
             ->paginate(5);
-
-        /* la method compact qui a pour specifité de prendre  le nom de la variable entre côte et  sans compact('datas')*/
+            
+        // get all user
         $users = $this->users;
+        /* la method compact qui a pour specifité de prendre  le nom de la variable entre côte et  sans compact('datas')*/
         return view('todos.index', compact('datas', 'users'));
     }
 
@@ -94,6 +97,7 @@ class TodoController extends Controller
      */
     public function show($id)
     {
+       
         //
     }
 
@@ -136,7 +140,7 @@ class TodoController extends Controller
         //alert()->success('SuccessAlert', 'Lorem ipsum dolor sit amet.');
         ## i don't use the save() method
 
-        return redirect()->route("todos.index")->with('success', 'succeffuly update');
+        return redirect()->route("todos.index")->with('success', 'modification avec succes');
     }
 
     /**
@@ -149,7 +153,7 @@ class TodoController extends Controller
     public function destroy($id)
     {
         DB::table('todolist')->where('id', $id)->delete();
-        toast('Success Toast', 'success');
+        toast('Suppression effectuer avec succes', 'success');
         return back();
     }
 
@@ -185,10 +189,12 @@ class TodoController extends Controller
         if ($todo->done == 1) {
             $todo->done = 0;
             $todo->update();
+            notify()->warning('la todo ' . $id . ' est ouverte');
             return back();
         } else {
             $todo->done = 1;
             $todo->update();
+            notify()->success('la todo ' . $id . ' a bien été terminer');
             return back();
         }
     }

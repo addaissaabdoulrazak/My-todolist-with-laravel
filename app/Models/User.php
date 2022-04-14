@@ -46,7 +46,7 @@ class User extends Authenticatable
      *  Adding a new feature by extention in a Model
      */
 
-    #     getAllUser  #
+    #     get All User  #
 
     public static function getAllUser()
     {

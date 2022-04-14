@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Models\Todolist;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
