@@ -51,7 +51,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 route::get('/todos/undone', [App\Http\Controllers\TodoController::class, 'undone'])->name('todos.undone');
 route::get('/todos/done', [App\Http\Controllers\TodoController::class, 'done'])->name('todos.done');
-route::resource('/todos', App\Http\Controllers\TodoController::class);
+route::resource('/todos', App\Http\Controllers\TodoController::class)->middleware('verifyAuth');
 
 //ajout d'une route  permettant  de switché d'une Todo ouverte a une Todo fermé => Done / Undone
 route::put('/todos/makedone/{id_current_todo}', 'App\Http\Controllers\TodoController@makedone')->name('todos.makedone');
